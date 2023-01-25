@@ -9,16 +9,16 @@ def get_data_files(dir_path):
  return os.listdir(dir_path)
 
 def get_df_from_file(file_path):
- return pd.read_table(my_file, delim_whitespace= True)
+ return pd.read_table(file_path, delim_whitespace= True)
 
 def get_one_datapoint_from_df(df):
-  df = df[df1.A5016 == 0.0]
+  df = df[df.A5016 == 0.0]
   df = df.iloc[:1]
   return df.drop(columns=["A5334", "A5335", "A5016"], axis = 1)
   
-def combine_datapoints_from_dfs(file_list):
+def combine_datapoints_from_dfs(file_list, data):
  for file in file_list:
-   my_file = pathx + "/" + file
+   my_file = path_to_data_files + "/" + file
    df = get_df_from_file(my_file)
    data_point = get_one_datapoint_from_df(df)
    data = pd.concat([data, data_point], ignore_index=True)
@@ -37,9 +37,9 @@ def plot(df):
 
 def main():
  data_files = get_data_files(path_to_data_files)
- data = combine_datapoints_from_dfs(data_files)
- data = shape_df(data)
- plot(data)
+ data_points = combine_datapoints_from_dfs(data_files, data)
+ data_points = shape_df(data_points)
+ plot(data_points)
 
 if __name__ == '__main__':
  main()
